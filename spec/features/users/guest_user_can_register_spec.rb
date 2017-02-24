@@ -29,7 +29,7 @@ describe "Guest signup workflow" do
       expect(page).to have_link("Sign in with Facebook")
     end
 
-    scenario "can signup via facebook" do
+    scenario "can signup for the app via Facebook" do
       visit root_path
 
       click_on("Sign in with Facebook")
