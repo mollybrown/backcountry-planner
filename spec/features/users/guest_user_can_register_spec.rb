@@ -1,23 +1,10 @@
 require 'rails_helper'
-
-OmniAuth.config.test_mode = true
-OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
-        provider: 'facebook',
-        uid: '123545',
-        info: {
-          name:  "Molly Brown",
-          email: "test@example.com",
-          image: "www.image.jpg"
-        },
-        credentials: {
-          token: "123456",
-          expires_at: Time.now + 1.week
-        }
-      })
+require 'support/omniauth_helper'
 
 describe "Guest signup workflow" do
   before(:each) do
     Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:facebook]
+    stub_omniauth
   end
 
   context "An unregisted guest" do
@@ -26,13 +13,13 @@ describe "Guest signup workflow" do
 
       expect(current_path).to eq('/')
       expect(page).to have_content("Weekend Warrior")
-      expect(page).to have_link("Sign in with Facebook")
+      expect(page).to have_link("Sign in or Sign up with Facebook")
     end
 
     scenario "can signup for the app via Facebook" do
       visit root_path
 
-      click_on("Sign in with Facebook")
+      click_on("Sign in or Sign up with Facebook")
 
       expect(current_path).to eq('/')
       expect(page).to have_content("Weekend Warrior")
