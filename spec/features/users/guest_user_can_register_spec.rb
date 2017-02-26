@@ -3,7 +3,6 @@ require 'support/omniauth_helper'
 
 describe "Guest signup workflow" do
   before(:each) do
-    Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:facebook]
     stub_omniauth
   end
 
