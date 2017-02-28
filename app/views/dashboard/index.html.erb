@@ -1,0 +1,33 @@
+<%= render partial: 'shared/navbar' %>
+
+<div class="container">
+  <h1>Howdy, <%= @user.name %>!</h1>
+
+  <% if @trips.count == 0 %>
+    <h3 class="center-align">Looks like you don't have any trips planned. Select a park to get started!</h3>
+  <% else %>
+    <h3 class="center-align">Your upcoming trips<h3>
+  <% end %>
+
+  <div class="row">
+
+    <% @parks.each do |park| %>
+    <div class="col s12 m4">
+      <div class="card small hoverable">
+        <div class="card-image">
+          <%= image_tag(park.image_url) %>
+          <span class="card-title"><%= park.name %></span>
+            <i class="material-icons">
+              <%= link_to "add", park_path(park), class: "btn-floating halfway-fab waves-effect waves-light red" %>
+            </i>
+        </div>
+        <div class="card-content">
+          <p><%= truncate(park.description, length: 150) %></p>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+  </div>
+
+</div>

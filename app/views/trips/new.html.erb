@@ -1,0 +1,29 @@
+<%= render partial: 'shared/navbar' %>
+
+<div class="container">
+  <h1>Create a new trip</h1>
+
+      <%= form_for @trip do |f| %>
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+
+        <%= f.label :description %>
+        <%= f.text_field :description %>
+
+        <%= f.label :start_date %>
+        <%= f.text_field :start_date %>
+
+        <%= f.label :end_date %>
+        <%= f.text_field :end_date %>
+
+        <%= f.label :national_park %>
+        <%= f.text_field :national_park, value: @park.name, readonly: true %>
+
+        <%= f.label :campground %>
+        <%= f.text_field :campground, value: @campground.name, readonly: true %>
+    
+        <%= f.submit "Create Trip!", class:"waves-effect waves-light btn" %>
+      <% end %>
+    </form>
+  </div>
+</div>

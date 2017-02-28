@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224181854) do
+ActiveRecord::Schema.define(version: 20170228031358) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "campgrounds", force: :cascade do |t|
+    t.string  "name"
+    t.text    "description"
+    t.string  "image_url"
+    t.integer "facility_id"
+    t.integer "park_id"
+    t.index ["park_id"], name: "index_campgrounds_on_park_id", using: :btree
+  end
 
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
@@ -27,6 +36,15 @@ ActiveRecord::Schema.define(version: 20170224181854) do
   create_table "gear_lists", force: :cascade do |t|
     t.string  "item"
     t.integer "quantity"
+    t.integer "trip_id"
+    t.index ["trip_id"], name: "index_gear_lists_on_trip_id", using: :btree
+  end
+
+  create_table "parks", force: :cascade do |t|
+    t.integer "rec_area_number"
+    t.string  "name"
+    t.text    "description"
+    t.string  "image_url"
   end
 
   create_table "trips", force: :cascade do |t|
@@ -34,12 +52,12 @@ ActiveRecord::Schema.define(version: 20170224181854) do
     t.text     "description"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.string   "campground"
-    t.string   "national_park"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "leader_id"
     t.integer  "gear_list_id"
+    t.integer  "campground_id"
+    t.index ["campground_id"], name: "index_trips_on_campground_id", using: :btree
     t.index ["gear_list_id"], name: "index_trips_on_gear_list_id", using: :btree
   end
 
@@ -64,6 +82,9 @@ ActiveRecord::Schema.define(version: 20170224181854) do
     t.datetime "updated_at",       null: false
   end
 
+  add_foreign_key "campgrounds", "parks"
+  add_foreign_key "gear_lists", "trips"
+  add_foreign_key "trips", "campgrounds"
   add_foreign_key "trips", "gear_lists"
   add_foreign_key "trips", "users", column: "leader_id"
 end

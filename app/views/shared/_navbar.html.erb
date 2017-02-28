@@ -1,0 +1,13 @@
+<nav>
+  <div class="nav-wrapper">
+    <%= link_to "Weekend Warrior", dashboard_path, class: "brand-logo" %>
+    <ul class="right hide-on-med-and-down">
+      <li>
+        <% if current_user %>
+          Signed in as <strong><%= current_user.name %></strong>!
+          <%= link_to "Sign out", signout_path, id: "sign_out" %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</nav>

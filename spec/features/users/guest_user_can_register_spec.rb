@@ -20,7 +20,7 @@ describe "Guest signup workflow" do
 
       click_on("Sign in or Sign up with Facebook")
 
-      expect(current_path).to eq('/')
+      expect(current_path).to eq('/dashboard')
       expect(page).to have_content("Weekend Warrior")
       expect(page).to have_content("Signed in as Molly Brown!")
       expect(page).to have_content("Sign out")
